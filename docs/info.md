@@ -48,9 +48,7 @@ pinout:
   uo[6]: "Hidden neuron 2"
   uo[7]: "Hidden neuron 3"
 
-# ============================================================
-# Optional (but recommended)
-# ============================================================
+
 
 documentation:
   how_it_works: >
@@ -74,4 +72,4 @@ documentation:
 
   extras: >
     Designed for TinyTapeout with a focus on minimal area and purely combinational logic.
-    No clock or sequential elements are used.
+    
