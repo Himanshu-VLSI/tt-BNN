@@ -15,10 +15,11 @@ tiles: "1x1"
 top_module: "bnn_top"
 
 source_files:
-  - "bnn_top.v"
-  - "bnn_neuron6.v"
-  - "bnn_neuron4.v"
-  - "popcount4.v"
+   - "project.v"
+#  - "bnn_top.v"
+#  - "bnn_neuron6.v"
+#  - "bnn_neuron4.v"
+#  - "popcount4.v"
 
 
 
