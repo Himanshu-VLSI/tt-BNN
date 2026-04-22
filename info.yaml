@@ -2,11 +2,11 @@
 # TinyTapeout Project Info (CI FIXED VERSION)
 # ============================================================
 
-project_title: "Binary Neural Network Inference Engine"
+project:
+title: "Binary Neural Network Inference Engine"
 author: "HIMANSHU PAL"
 
-description: >
-  A fully combinational Binary Neural Network (BNN) inference engine.
+description:  A fully combinational Binary Neural Network (BNN) inference engine.
   This design replaces multiplication with XNOR logic and accumulation
   with popcount, enabling efficient neural network computation in hardware.
   It classifies a 6-bit input into two output classes using a 2-layer architecture.
@@ -14,6 +14,7 @@ description: >
 language: "Verilog"
 clock_hz: 0
 
+tiles: "1x1" 
 top_module: "bnn_top"
 
 source_files:
@@ -22,7 +23,7 @@ source_files:
   - "bnn_neuron4.v"
   - "popcount4.v"
 
-tiles: "1x1"
+
 
 # ============================================================
 # Pinout (REQUIRED)
@@ -46,3 +47,4 @@ pinout:
   uo[5]: "Hidden neuron 1"
   uo[6]: "Hidden neuron 2"
   uo[7]: "Hidden neuron 3"
+yaml_version: 6
