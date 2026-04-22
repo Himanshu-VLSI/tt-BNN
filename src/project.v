@@ -30,7 +30,7 @@ endmodule*/
 // 4-bit Popcount Module
 // Counts number of 1s in input
 // ============================================================
-
+`default_nettype none
 module popcount4 (
     input  [3:0] in,
     output [2:0] count
