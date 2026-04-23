@@ -1,31 +1,15 @@
-# ============================================================
-# TinyTapeout Project Info (CI FIXED VERSION)
-# ============================================================
 yaml_version: 6
+
 project:
-title: "Binary Neural Network Inference Engine"
-author: "HIMANSHU PAL"
-
-description: "A fully combinational Binary Neural Network (BNN) inference engine. This design replaces multiplication with XNOR logic and accumulation with popcount, enabling efficient neural network computation in hardware. It classifies a 6-bit input into two output classes using a 2-layer architecture."
-
-language: "Verilog"
-clock_hz: 0
-
-tiles: "1x1" 
-top_module: "bnn_top"
-
-source_files:
-   - "project.v"
-#  - "bnn_top.v"
-#  - "bnn_neuron6.v"
-#  - "bnn_neuron4.v"
-#  - "popcount4.v"
-
-
-
-# ============================================================
-# Pinout (REQUIRED)
-# ============================================================
+  title:       "Binary Neural Network Inference Engine"
+  author:      "KANYA RASI"
+  description: "A fully combinational Binary Neural Network (BNN) that classifies a 6-bit input into 2 classes using XNOR and popcount operations across a hidden layer of 4 neurons."
+  language:    "Verilog"
+  clock_hz:    0
+  tiles:       "1x1"
+  top_module:  "tt_um_bnn_himanshu"
+  source_files:
+    - "project.v"
 
 pinout:
   ui[0]: "Input feature bit 0"
@@ -36,13 +20,19 @@ pinout:
   ui[5]: "Input feature bit 5"
   ui[6]: "Unused"
   ui[7]: "Unused"
-
   uo[0]: "Class 0 output"
   uo[1]: "Class 1 output"
-  uo[2]: "Confidence bit (class 0)"
-  uo[3]: "Confidence bit (class 1)"
-  uo[4]: "Hidden neuron 0"
-  uo[5]: "Hidden neuron 1"
-  uo[6]: "Hidden neuron 2"
-  uo[7]: "Hidden neuron 3"
-
+  uo[2]: "Confidence bit LSB (class 0)"
+  uo[3]: "Confidence bit LSB (class 1)"
+  uo[4]: "Hidden neuron 0 (debug)"
+  uo[5]: "Hidden neuron 1 (debug)"
+  uo[6]: "Hidden neuron 2 (debug)"
+  uo[7]: "Hidden neuron 3 (debug)"
+  uio[0]: ""
+  uio[1]: ""
+  uio[2]: ""
+  uio[3]: ""
+  uio[4]: ""
+  uio[5]: ""
+  uio[6]: ""
+  uio[7]: ""
