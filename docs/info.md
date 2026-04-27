@@ -1,75 +1,39 @@
-# ============================================================
-# TinyTapeout Project Information File
-# ============================================================
+<!---
+This file is used to generate your project datasheet. Please fill in the information below and delete any unused sections.
+You can also include images in this folder and reference them in the markdown. Each image must be less than
+512 kb in size, and the combined size of all images must be less than 1 MB.
+-->
 
-project:
-  name: "Binary Neural Network Inference Engine"
-  author: "Your Name"
-  description: >
-    A fully combinational Binary Neural Network (BNN) inference engine.
-    The design uses XNOR operations for multiplication and popcount for accumulation,
-    enabling efficient neural network computation without multipliers.
-    It classifies a 6-bit input vector into two output classes using a 2-layer architecture.
+## How it works
 
-  language: "Verilog"
-  clock_hz: 0
+This project is a fully combinational Binary Neural Network (BNN) inference engine implemented in Verilog. It classifies a 6-bit  input feature vector into one of two output classes using a two-layer architecture with fixed binary weights.
 
-  # TinyTapeout uses 8 inputs and 8 outputs
-  tiles: "1x1"
+**Layer 1 — Hidden Layer (4 neurons):** Each neuron receives the full 6-bit input and computes an XNOR operation with a fixed 6-bit weight vector. XNOR replaces multiplication — a matching bit contributes +1, a mismatching bit contributes -1. A popcount then tallies the number of matches, and a threshold of 3 or more activates the neuron output to 1.
 
-  top_module: "bnn_top"
+**Layer 2 — Output Layer (2 neurons):** The four hidden neuron outputs form a 4-bit vector that feeds into two output neurons using the same XNOR and popcount approach, with a threshold of 2 or more. Each output neuron represents one class.
 
-  source_files:
-    - "bnn_top.v"
-    - "bnn_neuron6.v"
-    - "bnn_neuron4.v"
-    - "popcount4.v"
+**Confidence:** The LSB of each output neuron's popcount is exposed on bits 2 and 3 of the output bus as a simple confidence indicator.
 
-# ============================================================
-# Pin Configuration
-# ============================================================
+**Debug visibility:** The raw hidden layer outputs are mirrored on output bits 7 to 4, making it easy to inspect internal activations during testing.
 
-pinout:
-  ui[0]: "Input feature bit 0"
-  ui[1]: "Input feature bit 1"
-  ui[2]: "Input feature bit 2"
-  ui[3]: "Input feature bit 3"
-  ui[4]: "Input feature bit 4"
-  ui[5]: "Input feature bit 5"
-  ui[6]: "Unused"
-  ui[7]: "Unused"
+## How to test
 
-  uo[0]: "Class 0 output"
-  uo[1]: "Class 1 output"
-  uo[2]: "Confidence bit (class 0 LSB)"
-  uo[3]: "Confidence bit (class 1 LSB)"
-  uo[4]: "Hidden neuron 0"
-  uo[5]: "Hidden neuron 1"
-  uo[6]: "Hidden neuron 2"
-  uo[7]: "Hidden neuron 3"
+The design is fully combinational — no clock or reset is needed for normal operation. To test it, apply a 6-bit pattern on `ui[5:0]` (leave `ui[7:6]` as 0), then immediately read the output from `uo_out`.
 
+- `uo[0]` = 1 means the input is classified as Class 0
+- `uo[1]` = 1 means the input is classified as Class 1
+- `uo[2]` = confidence LSB for Class 0
+- `uo[3]` = confidence LSB for Class 1
+- `uo[7:4]` = hidden neuron activation values (for debugging)
 
+Example inputs to try:
 
-documentation:
-  how_it_works: >
-    The design implements a Binary Neural Network (BNN) using combinational logic.
-    Each neuron performs an XNOR operation between input and weights, followed by
-    a popcount to count matching bits. The result is compared against a threshold
-    to produce a binary output. Two layers are used: a hidden layer with 4 neurons
-    and an output layer with 2 neurons.
+| `ui[5:0]` (binary) | Decimal | Expected result |
+|---|---|---|
+| `101011` | 43 | Class 0 active (`uo[0]` = 1) |
+| `110001` | 49 | Class 0 active (`uo[0]` = 1) |
+| `011010` | 26 | Class 1 active (`uo[1]` = 1) |
 
-  inputs: >
-    A 6-bit binary input vector representing features.
-    Each bit corresponds to +1 or -1 in binary form.
+## External hardware
 
-  outputs: >
-    Two output bits represent classification results.
-    Additional bits expose internal hidden neuron outputs and confidence levels.
-
-  limitations: >
-    The weights are fixed at synthesis time and not programmable.
-    This is a small demonstration model and not suitable for large-scale inference.
-
-  extras: >
-    Designed for TinyTapeout with a focus on minimal area and purely combinational logic.
-    
+No external hardware is required. The design is self-contained and fully combinational.
