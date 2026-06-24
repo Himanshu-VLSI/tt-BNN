@@ -30,7 +30,7 @@ The GitHub action will automatically build the ASIC files using [LibreLane](http
 - [Learn how semiconductors work](https://tinytapeout.com/siliwiz/)
 - [Join the community](https://tinytapeout.com/discord)
 - [Build your design locally](https://www.tinytapeout.com/guides/local-hardening/)
-
+  
 ## What next?
 
 - [Submit your design to the next shuttle](https://app.tinytapeout.com/).
